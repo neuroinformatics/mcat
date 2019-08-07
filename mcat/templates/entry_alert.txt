@@ -1,0 +1,13 @@
+{% load i18n %}{% autoescape off %}
+{% blocktrans with name=entryform.name.value %}{{ name }} registered the schedule for attending the meeting.{% endblocktrans %}
+
+{{ meetingform.title.label }}: {{ meetingform.title.value }}
+{{ meetingform.place.label }}: {{ meetingform.place.value }}
+
+{{ entryform.name.label }}: {{ entryform.name.value }}
+{{ entryform.mail.label }}: {{ entryform.mail.value }}
+{{ entryform.comment.label }}:
+{{ entryform.comment.value|safe }}
+
+{% blocktrans %}The {{ site_name }} team{% endblocktrans %}
+{% endautoescape %}

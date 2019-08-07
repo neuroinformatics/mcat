@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load url from future %}
+{% block title %}{% trans "View Index" %}{% endblock %}
+{% block content %}
+<div class="container">
+<div class="page-header">
+<h1>{% trans "View Meeting Schedules" %}</h1>
+</div>
+
+{% if error %}
+<div class="alert alert-danger"><strong>{{ error }}</strong></div>
+{% else %}
+
+<div class="col-sm-12">
+	<table class="table table-bordered table-hover">
+		<thead>
+			<tr>
+				<th>{{ detailform.title.label }}</th>
+				<th>{{ detailform.place.label }}</th>
+				<th>{{ detailform.date_start.label }}</th>
+				<th>{{ detailform.time_slot.label }}</th>
+				<th>{{ detailform.time_start.label }}</th>
+				<th>{{ detailform.option_mode.label }}</th>
+				<th>{{ detailform.remarks.label }}</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for meeting in meetings %}
+			<tr style="cursor: pointer;">
+				<td onclick="location.href='{%url 'mcat.views.view' meeting.code meeting.view_key %}'">
+					{{ meeting.title }}</td>
+				<td onclick="location.href='{%url 'mcat.views.view' meeting.code meeting.view_key %}'">
+					{{ meeting.place }}</td>
+				<td onclick="location.href='{%url 'mcat.views.view' meeting.code meeting.view_key %}'">
+					{{ meeting.date_start }} {% trans "-" %} {{ meeting.date_end }}</td>
+				<td onclick="location.href='{%url 'mcat.views.view' meeting.code meeting.view_key %}'">
+					{{ meeting.get_time_slot_display }}</td>
+				<td onclick="location.href='{%url 'mcat.views.view' meeting.code meeting.view_key %}'">
+					{% if meeting.time_slot == 'hour_full' %}
+						{{ meeting.time_start }}:00 {% trans "-" %} {{ meeting.time_end }}:00
+					{% endif %}
+				</td>
+				<td onclick="location.href='{%url 'mcat.views.view' meeting.code meeting.view_key %}'">
+					{{ meeting.get_option_mode_display }}</td>
+				<td onclick="location.href='{%url 'mcat.views.view' meeting.code meeting.view_key %}'">
+					{{ meeting.remarks }}</td>
+				<td onclick="location.href='{%url 'mcat.views.delete_confirm' meeting.code meeting.view_key %}'">
+					<span class="ui-icon ui-icon-close"></span></td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+</div>
+
+{% endif %}
+
+</div>
+{% endblock %}

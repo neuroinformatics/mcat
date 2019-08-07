@@ -1,0 +1,473 @@
+# Meeting Coordination Assistance Tool
+# Copyright (C) 2013 RIKEN BSI Lab for Neuroinformatics
+# This file is distributed under the same license as the MCAT package.
+# Takayuki KANNON <kannon@brain.riken.jp>, 2013, 2014.
+msgid ""
+msgstr ""
+"Project-Id-Version: MCAT 2.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-08-18 17:23+0900\n"
+"PO-Revision-Date: 2014-03-14 10:57+0900\n"
+"Last-Translator: Takayuki KANNON <kannon@brain.riken.jp>\n"
+"Language-Team: Neuroinformatics Japan Center\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Virtaal 0.6.1\n"
+
+#: forms.py:18
+msgid "Board of directors' meeting"
+msgstr "委員会定例会"
+
+#: forms.py:19
+msgid "Seminar room"
+msgstr "セミナールーム"
+
+#: forms.py:58 models.py:38
+msgid "Meeting Code"
+msgstr "会議コード"
+
+#: forms.py:59 models.py:39
+msgid "View Key"
+msgstr "閲覧キー"
+
+#: models.py:15
+msgid "Daily"
+msgstr "終日"
+
+#: models.py:16
+msgid "Half-daily"
+msgstr "半日"
+
+#: models.py:17
+msgid "Hourly"
+msgstr "1時間"
+
+#: models.py:21
+msgid "No option"
+msgstr "オプションなし"
+
+#: models.py:22
+msgid "Allow \"web\" option"
+msgstr "\"WEB参加可能\"オプションを許可"
+
+#: models.py:23
+msgid "Allow \"maybe\" option"
+msgstr "\"たぶん参加可能\"オプションを許可"
+
+#: models.py:40
+msgid "Title"
+msgstr "会議名"
+
+#: models.py:41
+msgid "Place"
+msgstr "会議場所"
+
+#: models.py:42
+msgid "Time slot"
+msgstr "入力単位"
+
+#: models.py:43
+msgid "Options"
+msgstr "オプション"
+
+#: models.py:44
+msgid "Remarks"
+msgstr "備考"
+
+#: models.py:45 models.py:46 templates/create.txt:7
+#: templates/create_detail.html:63 templates/delete.html:39
+msgid "Candidate dates"
+msgstr "候補日"
+
+#: models.py:47 models.py:48 templates/create.txt:9
+msgid "Time range"
+msgstr "時間範囲"
+
+#: models.py:55
+msgid "Meeting"
+msgstr "会議"
+
+#: models.py:56
+msgid "Meetings"
+msgstr "会議"
+
+#: models.py:60
+msgid "Name"
+msgstr "名前"
+
+#: models.py:61
+msgid "E-mail"
+msgstr "メールアドレス"
+
+#: models.py:62
+msgid "Comments"
+msgstr "コメント"
+
+#: models.py:64
+msgid "Update Key"
+msgstr "更新キー"
+
+#: models.py:68
+msgid "Attend"
+msgstr "参加予定"
+
+#: models.py:69
+msgid "Attends"
+msgstr "参加予定"
+
+#: utils.py:66 utils.py:147 utils.py:214
+msgid "All Day"
+msgstr "終日"
+
+#: utils.py:69 utils.py:149 utils.py:216
+msgid "AM"
+msgstr "午前"
+
+#: utils.py:69 utils.py:149 utils.py:216
+msgid "PM"
+msgstr "午後"
+
+#: utils.py:173 utils.py:185
+msgid "registered the schedule"
+msgstr "予定を登録しました"
+
+#: utils.py:173 utils.py:185 utils.py:237
+msgid ":"
+msgstr ""
+
+#: utils.py:237
+msgid "created the meeting"
+msgstr "会議を作成しました"
+
+#: views.py:74 views.py:95 views.py:106 views.py:124 views.py:154
+msgid "Meeting code doesn't exist!"
+msgstr "会議コードが存在しません！"
+
+#: views.py:79 views.py:112
+msgid "View key doesn't match!"
+msgstr "閲覧キーが一致しません！"
+
+#: views.py:97
+msgid "Illegal or malformed form data!"
+msgstr "フォームデータが不正です！"
+
+#: views.py:109
+msgid "Operation not permitted!"
+msgstr "許可されていない操作です！"
+
+#: views.py:159
+msgid "Update key doesn't match!"
+msgstr "更新キーが一致しません！"
+
+#: templates/create.html:4 templates/create_detail.html:153
+msgid "Create"
+msgstr "会議作成"
+
+#: templates/create.html:29 templates/create_detail.html:41
+msgid "Create a New Meeting"
+msgstr "新規会議作成"
+
+#: templates/create.html:55
+msgid "Date Range"
+msgstr "日付範囲"
+
+#: templates/create.html:61 templates/create.html.py:110
+msgid "From"
+msgstr "開始"
+
+#: templates/create.html:72 templates/create.html.py:121
+msgid "To"
+msgstr "終了"
+
+#: templates/create.html:81
+msgid "You can edit the details on next screen."
+msgstr "次の画面で詳細を編集できます。"
+
+#: templates/create.html:83
+msgid "Invalid date range."
+msgstr "日付範囲が不正です。"
+
+#: templates/create.html:104 templates/create_detail.html:82
+#: templates/delete.html:55
+msgid "Time Range"
+msgstr "時間範囲"
+
+#: templates/create.html:131
+msgid "Invalid time range."
+msgstr "時間範囲が不正です。"
+
+#: templates/create.html:155
+msgid "i.e. meeting description, participants, agenda, etc..."
+msgstr "例）会議説明、参加者、議事次第など..."
+
+#: templates/create.html:164 templates/create_detail.html:137
+#: templates/entry.html:173
+msgid "Next"
+msgstr "次へ"
+
+#: templates/create.txt:2
+#, python-format
+msgid "%(site_name)s has created a meeting schedule as follows."
+msgstr "%(site_name)s は以下のように会議を作成しました。"
+
+#: templates/create.txt:7 templates/create.txt.py:9
+#: templates/create_detail.html:65 templates/create_detail.html.py:84
+#: templates/delete.html:41 templates/delete.html.py:57
+#: templates/view.html:101 templates/view.html.py:117
+#: templates/view_index.html:37 templates/view_index.html.py:42
+msgid "-"
+msgstr "～"
+
+#: templates/create.txt:15
+msgid ""
+"\n"
+"You can access the registration page of schedule via following URL.\n"
+"Please email to attendees.\n"
+msgstr ""
+"\n"
+"以下のURLから予定登録ページにアクセスできます。\n"
+"参加者にメールでお知らせください。\n"
+
+#: templates/create.txt:19
+msgid "For Registration"
+msgstr "登録用"
+
+#: templates/create.txt:22
+msgid "For Tabulation"
+msgstr "集計用"
+
+#: templates/create.txt:25 templates/entry.txt:15
+msgid "Have a good meeting !"
+msgstr "それではよい会議を！"
+
+#: templates/create.txt:27 templates/entry.txt:17 templates/entry_alert.txt:12
+#, python-format
+msgid "The %(site_name)s team"
+msgstr "%(site_name)s チーム"
+
+#: templates/create_detail.html:5
+msgid "Detail"
+msgstr "詳細"
+
+#: templates/create_detail.html:47 templates/view.html:81
+msgid "Meeting information"
+msgstr "会議情報"
+
+#: templates/create_detail.html:109
+msgid "Specify details of date and time"
+msgstr "日時の詳細を指定"
+
+#: templates/create_detail.html:113 templates/entry.html:101
+msgid "Current mode"
+msgstr "現在のモード"
+
+#: templates/create_detail.html:117
+msgid "Include in candidates"
+msgstr "候補に含める"
+
+#: templates/create_detail.html:121
+msgid "Exclude from candidates"
+msgstr "候補から外す"
+
+#: templates/create_detail.html:134 templates/delete.html:17
+#: templates/delete.html.py:80 templates/delete.html:81
+#: templates/entry.html:170
+msgid "Prev"
+msgstr "戻る"
+
+#: templates/create_detail.html:141 templates/create_detail.html.py:146
+#: templates/entry.html:177 templates/entry.html.py:182
+msgid "Confirmation"
+msgstr "確認"
+
+#: templates/create_detail.html:149
+msgid "Are you sure you want to create a meeting?"
+msgstr "本当に会議を作成しますか？"
+
+#: templates/create_detail.html:152 templates/entry.html:186
+msgid "Cancel"
+msgstr "キャンセル"
+
+#: templates/delete.html:4 templates/delete.html.py:8
+msgid "Delete Meeting"
+msgstr "会議削除"
+
+#: templates/delete.html:79
+msgid "Delete"
+msgstr "削除"
+
+#: templates/entry.html:5
+msgid "Entry"
+msgstr "登録"
+
+#: templates/entry.html:56 templates/entry_index.html:8
+msgid "Register Your Schedule"
+msgstr "予定の登録"
+
+#: templates/entry.html:61
+msgid "We will hold a meeting as following."
+msgstr "以下のように会議を開催します。"
+
+#: templates/entry.html:86
+msgid "Please enter your schedule into the table below."
+msgstr "下の表に予定を入力してください。"
+
+#: templates/entry.html:89
+msgid "Since initial value is \"Attend\", please change to your schedule."
+msgstr "初期値は\"参加可能\"なので、あなたの予定に変更してください。"
+
+#: templates/entry.html:91
+msgid "Click the frame"
+msgstr "枠をクリック"
+
+#: templates/entry.html:92
+msgid "Schedule will be changed according to the \"Current mode\"."
+msgstr "\"現在のモード\"に従って予定が変更されます。"
+
+#: templates/entry.html:93
+msgid "Double-click the frame"
+msgstr "枠をダブルクリック"
+
+#: templates/entry.html:94
+msgid ""
+"\"Current mode\" will switch to the next mode and schedule will be changed."
+msgstr "\"現在のモード\"が次のモードに替わり、それに従って予定が変更されます。"
+
+#: templates/entry.html:95
+msgid "Click or Double-click the corner frame"
+msgstr "角の枠をクリックまたはダブルクリック"
+
+#: templates/entry.html:96
+msgid "All of schedule will be changed."
+msgstr "全ての予定が変更されます。"
+
+#: templates/entry.html:105
+msgid "Enter \"Not attend\""
+msgstr "\"参加不可\"を入力"
+
+#: templates/entry.html:109
+msgid "Enter \"Attend\""
+msgstr "\"参加可能\"を入力"
+
+#: templates/entry.html:114
+msgid "Enter \"Attend via Web\""
+msgstr "\"WEB参加可能\"を入力"
+
+#: templates/entry.html:120
+msgid "Enter \"Maybe attend\""
+msgstr "\"たぶん参加可能\"を入力"
+
+#: templates/entry.html:184
+msgid "Are you sure you want to register schedule?"
+msgstr "本当に予定を登録しますか？"
+
+#: templates/entry.html:187
+msgid "Register"
+msgstr "登録"
+
+#: templates/entry.txt:2
+msgid "You registered the schedule for attending the meeting."
+msgstr "会議に参加するための予定を登録しました。"
+
+#: templates/entry.txt:12
+msgid "For updating your schedule"
+msgstr "予定更新用"
+
+#: templates/entry_alert.txt:2
+#, python-format
+msgid "%(name)s registered the schedule for attending the meeting."
+msgstr "%(name)s さんが会議に参加するための予定を登録しました。"
+
+#: templates/entry_index.html:4
+msgid "Entry Index"
+msgstr "会議予定登録"
+
+#: templates/entry_index.html:14
+msgid "Please access the URL sent by e-mail from organizer."
+msgstr "主催者よりメールにて送信されたURLにアクセスしてください。"
+
+#: templates/specify_date_table.html:6 templates/specify_date_table.html:10
+#: templates/specify_date_table.html:30 templates/specify_date_table.html:34
+msgid "Date/Time"
+msgstr "日付/時間"
+
+#: templates/view.html:4
+msgid "View"
+msgstr "会議予定閲覧"
+
+#: templates/view.html:77 templates/view_index.html:8
+msgid "View Meeting Schedules"
+msgstr "会議予定を閲覧"
+
+#: templates/view.html:138
+msgid "Entry URL"
+msgstr "登録URL"
+
+#: templates/view.html:145
+msgid "Attendees table"
+msgstr "参加者表"
+
+#: templates/view.html:152
+msgid "Forced"
+msgstr "強制"
+
+#: templates/view.html:172
+msgid "Schedule table"
+msgstr "予定表"
+
+#: templates/view.html:186 templates/view.html.py:190
+msgid "Date"
+msgstr "日付"
+
+#: templates/view.html:193 templates/view.html.py:199
+msgid "Time"
+msgstr "時間"
+
+#: templates/view.html:202 templates/view.html.py:206
+msgid "Attendees"
+msgstr "参加"
+
+#: templates/view.html:211 templates/view.html.py:220
+msgid "+ WEB"
+msgstr "+ WEB参加"
+
+#: templates/view.html:214 templates/view.html.py:223
+msgid "+ Maybe"
+msgstr "+ 多分参加"
+
+#: templates/view_index.html:4
+msgid "View Index"
+msgstr "会議予定一覧"
+
+#~ msgid "Back"
+#~ msgstr "戻る"
+
+#~ msgid "Page not found."
+#~ msgstr "ページが見つかりません。"
+
+#~ msgid "Internal Server Error."
+#~ msgstr "内部サーバエラー。"
+
+#~ msgid "Create Meeting"
+#~ msgstr "会議作成"
+
+#~ msgid "Manage Meeting"
+#~ msgstr "会議管理"
+
+#~ msgid "Date range"
+#~ msgstr "日付範囲"
+
+#~ msgid "Invalid meeting code!"
+#~ msgstr "会議コードが不正です！"
+
+#~ msgid "Administration"
+#~ msgstr "会議管理"
+
+#~ msgid "Invalid meeting code or view key!"
+#~ msgstr "会議コードまたは閲覧キーが不正です！"
+
+#~ msgid "Meeting doesn't exsit!"
+#~ msgstr "会議が存在しません！"

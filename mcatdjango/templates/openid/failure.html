@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "OpenID failed" %}{% endblock %}
+{% block content %}
+<div class="container">
+<div class="page-header">
+    <h1>{% trans "OpenID failed" %}</h1>
+</div>
+<div class="alert alert-danger">
+    <p>{{ message|escape }}</p>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,196 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load url from future %}
+{% load static %}
+{% block title %}{% trans "Entry" %}{% endblock %}
+{% block javascript %}
+<script>
+	var mode_color = {
+		'0' : '#faa',
+		'1' : '#fff',
+		'2' : '#afa',
+		'-' : '#aaa',
+	};
+	$(function() {
+		var rows = $("#specify_date_table").attr("data-rows");
+		var cols = $("#specify_date_table").attr("data-cols");
+		var date_available = $("#id_date_available").val();
+		var date_attend = $("#id_date_attend").val();
+		
+		for ( var r = 0; r < rows; r++) {
+			for ( var c = 0; c < cols; c++) {
+				if(date_available[r * cols + c] == '0') {
+					date_table_default += '-';
+				} else if(date_attend.length > 0) {
+					date_table_default += date_attend[r * cols + c];						
+				} else {
+					date_table_default += '1';												
+				}
+			}
+		}
+		
+		$("#specify_date_table>*>tr>th").css("text-align","center");
+		
+		$("#id_legend_not_attend").css("background", mode_color[0]);
+		$("#id_legend_attend").css("background", mode_color[1]);
+		$("#id_legend_option").css("background", mode_color[2]);
+		
+		$("button[type='submit']").click(function() {
+			var rows = $("#specify_date_table").attr("data-rows");
+			var cols = $("#specify_date_table").attr("data-cols");
+			var date_attend = "";
+			for ( var r = 0; r < rows; r++) {
+				date_attend += date_table[r].join("");
+			}
+			$("#id_date_attend").val(date_attend);
+			return true;
+		});
+	});
+</script>
+<script src="{% static 'mcat.js' %}"></script>
+{% endblock %}
+{% block content %}
+<div class="container">
+
+	<div class="page-header">
+		<h1>{% trans "Register Your Schedule" %}</h1>
+	</div>
+
+	<form class="form-horizontal" action="#">
+
+		<p class="lead">{% trans "We will hold a meeting as following." %}
+		</p>
+
+		<div class="form-group">
+			<label class="col-sm-2 control-label">{{ detailform.title.label }}</label>
+			<div class="col-sm-10">
+				<p class="form-control-static">{{ meeting.title }}</p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">{{ detailform.place.label }}</label>
+			<div class="col-sm-10">
+				<p class="form-control-static">{{ meeting.place }}</p>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-2 control-label">{{ detailform.remarks.label }}</label>
+			<div class="col-sm-10">
+				<p class="form-control-static">
+				<pre>{{ meeting.remarks }}</pre>
+				</p>
+			</div>
+		</div>
+
+		<p class="lead">{% trans "Please enter your schedule into the table below." %}</p>
+
+		<div class="clearfix col-sm-12">
+			<p>{% trans 'Since initial value is "Attend", please change to your schedule.' %}</p>
+			<dl>
+				<dt>{% trans "Click the frame" %}</dt>
+				<dd>{% trans 'Schedule will be changed according to the "Current mode".' %}</dd>
+				<dt>{% trans "Double-click the frame" %}</dt>
+				<dd>{% trans '"Current mode" will switch to the next mode and schedule will be changed.' %}</dd>
+				<dt>{% trans "Click or Double-click the corner frame" %}</dt>
+				<dd>{% trans "All of schedule will be changed." %}</dd>
+			</dl>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-2 control-label">{% trans "Current mode" %}</label>
+			<div class="col-sm-10">
+				<label class="radio-inline">
+					<input type="radio" name="specify_mode" value="0" checked="checked" />
+					<span id="id_legend_not_attend">{% trans 'Enter "Not attend"' %}</span>
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="specify_mode" value="1" />
+					<span id="id_legend_attend">{% trans 'Enter "Attend"' %}</span>
+				</label>
+				{% if meeting.option_mode == "web" %}
+					<label class="radio-inline">
+						<input type="radio" name="specify_mode" value="2" />
+						<span id="id_legend_option">{% trans 'Enter "Attend via Web"' %}</span>
+					</label>
+				{% endif %}
+				{% if meeting.option_mode == "maybe" %}
+					<label class="radio-inline">
+						<input type="radio" name="specify_mode" value="2" />
+						<span id="id_legend_option">{% trans 'Enter "Maybe attend"' %}</span>
+					</label>
+				{% endif %}
+			</div>
+		</div>
+
+		{{ detailform.date_available }}
+		
+	</form>
+
+	{% include "specify_date_table.html" %}
+
+	<form class="form-horizontal" role="form" action="{% if key %}{% url 'mcat.views.update' code key %}{% else %}{% url 'mcat.views.entry' code %}{% endif %}" method="post">
+		{% csrf_token %}
+
+		<div class="form-group {% if entryform.name.errors %}has-error{% endif %}">
+			<label class="col-sm-2 control-label">{{ entryform.name.label }}</label>
+			<div class="col-sm-10">
+				{{ entryform.name }}
+				{% for error in entryform.name.errors %}
+					<p class="help-block">{{ error }}</p>
+				{% endfor %}
+			</div>
+		</div>
+
+		<div class="form-group {% if entryform.mail.errors %}has-error{% endif %}">
+			<label class="col-sm-2 control-label">{{ entryform.mail.label }}</label>
+			<div class="col-sm-10">
+				{{ entryform.mail }}
+				{% for error in entryform.mail.errors %}
+					<p class="help-block">{{ error }}</p>
+				{% endfor %}
+			</div>
+		</div>
+
+		<div
+			class="form-group {% if entryform.comment.errors %}has-error{% endif %}">
+			<label class="col-sm-2 control-label">{{entryform.comment.label}}</label>
+			<div class="col-sm-10">
+				{{ entryform.comment }}
+				{% for error in entryform.comment.errors %}
+					<p class="help-block">{{ error }}</p>
+				{% endfor %}
+			</div>
+		</div>
+
+		{% for hidden in entryform.hidden_fields %} {{ hidden }} {% endfor %}
+
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-1">
+				<button type="button" class="btn btn-default" onclick="JavaScript:history.back();">{% trans "Prev" %}</button>
+			</div>
+			<div class="col-sm-1">
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirm_modal">{% trans "Next" %}</button>
+			</div>
+		</div>
+
+		<div class="modal fade" id="confirm_modal" tabindex="-1" role="dialog" aria-labelledby="{% trans 'Confirmation' %}" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title">{% trans 'Confirmation' %}</h4>
+					</div>
+					<div class="modal-body">{% trans "Are you sure you want to register schedule?" %}</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'Cancel' %}</button>
+						<button type="submit" class="btn btn-primary">{% trans 'Register' %}</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</form>
+</div>
+
+{% endblock %}

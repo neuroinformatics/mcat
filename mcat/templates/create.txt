@@ -1,0 +1,28 @@
+{% load i18n %}{% autoescape off %}
+{% blocktrans %}{{ site_name }} has created a meeting schedule as follows.{% endblocktrans %}
+
+-----------------------------------------
+{{ createform.title.label }}: {{ createform.title.value }}
+{{ createform.place.label }}: {{ createform.place.value }}
+{% trans "Candidate dates" %}: {{ createform.date_start.value }} {% trans "-" %} {{ createform.date_end.value }}
+{{ createform.time_slot.label }}: {% for radio in createform.time_slot %}{% if radio.choice_value == createform.time_slot.value %}{{ radio.choice_label }}{% endif %}{% endfor %}
+{% if createform.time_slot.value == 'hour_full' %}{% trans "Time range" %}: {{createform.time_start.value}}:00 {% trans "-" %} {{createform.time_end.value}}:00
+{% endif %}{{ createform.option_mode.label }}: {% for radio in createform.option_mode %}{% if radio.choice_value == createform.option_mode.value %}{{ radio.choice_label|safe }}{% endif %}{% endfor %}
+{{ createform.remarks.label }}:
+{{ createform.remarks.value }}
+-----------------------------------------
+
+{% blocktrans %}
+You can access the registration page of schedule via following URL.
+Please email to attendees.
+{% endblocktrans %}
+{% trans "For Registration" %}:
+{{ entry_url }}
+
+{% trans "For Tabulation" %}:
+{{ view_url }}
+
+{% trans "Have a good meeting !" %}
+
+{% blocktrans %}The {{ site_name }} team{% endblocktrans %}
+{% endautoescape %}

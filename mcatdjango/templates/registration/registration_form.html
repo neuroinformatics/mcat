@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "User registration" %}{% endblock %}
+{% block javascript %}
+<script>
+	$(function() {
+		$("input#id_username").addClass("form-control");
+		$("input#id_email").addClass("form-control")
+		$("input#id_password1").addClass("form-control")
+		$("input#id_password2").addClass("form-control")
+	});
+</script>
+{% endblock %}
+{% block content %}
+<div class="container">
+<div class="page-header">
+<h1>{% trans "User registration" %}</h1>
+</div>
+<form class="form-horizontal" role="form" action="" method="post">{% csrf_token %}
+<div class="form-group {% if form.username.errors %}has-error{% endif %}">
+	<label class="col-sm-2 control-label">{{ form.username.label_tag }}</label>
+	<div class="col-sm-3">
+		{{ form.username }}
+		{% for error in form.username.errors %}
+			<p class="help-block">{{ error }}</p>
+		{% endfor %}
+	</div>
+</div>
+<div class="form-group {% if form.email.errors %}has-error{% endif %}">
+	<label class="col-sm-2 control-label">{{ form.email.label_tag }}</label>
+	<div class="col-sm-3">
+		{{ form.email }}
+		{% for error in form.email.errors %}
+			<p class="help-block">{{ error }}</p>
+		{% endfor %}
+	</div>
+</div>
+<div class="form-group {% if form.password1.errors %}has-error{% endif %}">
+	<label class="col-sm-2 control-label">{{ form.password1.label_tag }}</label>
+	<div class="col-sm-3">
+		{{ form.password1 }}
+		{% for error in form.password1.errors %}
+			<p class="help-block">{{ error }}</p>
+		{% endfor %}
+	</div>
+</div>
+<div class="form-group {% if form.password2.errors %}has-error{% endif %}">
+	<label class="col-sm-2 control-label">{{ form.password2.label_tag }}</label>
+	<div class="col-sm-3">
+		{{ form.password2 }}
+		{% for error in form.password2.errors %}
+			<p class="help-block">{{ error }}</p>
+		{% endfor %}
+	</div>
+</div>
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-3">
+      <button type="submit" class="btn btn-primary btn-block">{% trans "Create account" %}</button>
+    </div>
+</div>
+</form>
+</div>
+{% endblock %}

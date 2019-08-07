@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% load url from future %}
+{% block title %}{% trans "Login" %}{% endblock %}
+{% block javascript %}
+<script>
+	$(function() {
+		$("input#id_username").addClass("form-control");
+		$("input#id_password").addClass("form-control")
+		$("input#id_openid_identifier").addClass("form-control");
+		$("button.shortcut").click(function(){
+			$("input#id_openid_identifier").val( $(this).attr("data-url") );
+			$("form").submit();
+			return false;
+		});
+	});
+</script>
+{% endblock %}
+{% block content %}
+<div class="container">
+<div class="page-header">
+<h1>{% trans "Login" %}</h1>
+</div>
+
+{% if form.errors %}
+<div class="alert alert-danger"><strong>{% trans "Your username and password didn't match. Please try again." %}</strong></div>
+{% endif %}
+
+
+<h2>{% trans "Login with local account" %}</h2>
+<form class="form-horizontal" role="form" method="post" action=".">{% csrf_token %}
+
+	<div class="form-group {% if form.username.errors %}has-error{% endif %}">
+		<label class="col-sm-2 control-label">{{ form.username.label_tag }}</label>
+		<div class="col-sm-3">
+			{{ form.username }}
+			{% for error in form.username.errors %}
+				<p class="help-block">{{ error }}</p>
+			{% endfor %}
+		</div>
+	</div>
+	
+	<div class="form-group {% if form.password.errors %}has-error{% endif %}">
+		<label class="col-sm-2 control-label">{{ form.password.label_tag }}</label>
+		<div class="col-sm-3">
+			{{ form.password }}
+			{% for error in form.password.errors %}
+				<p class="help-block">{{ error }}</p>
+			{% endfor %}
+		</div>
+	</div>
+
+	{% if next %}
+		<input type="hidden" name="next" value="{{ next }}" />
+	{% endif %}
+	
+	<div class="form-group">
+	    <div class="col-sm-offset-2 col-sm-3">
+	      <button type="submit" class="btn btn-primary btn-block">{% trans "Login" %}</button>
+	    </div>
+	</div>
+	<div class="form-group">
+	    <div class="col-sm-offset-2 col-sm-3">
+		  <hr/>
+	      <a href="{% url 'django.contrib.auth.views.password_reset' %}" class="btn btn-default btn-block">{% trans "Reset your password" %}</a>
+	      {# <a href="{% url 'registration.views.register' %}" class="btn btn-default btn-block">{% trans "Create an account" %}</a> #}
+	    </div>
+	</div>
+
+</form>
+
+{% if use_django_shibboleth %}
+
+<hr/>
+
+<h2>{% trans "Sign in with your Shibboleth IdP" %}</h2>
+<form class="form-horizontal" role="form" name="fopenid" action="{% url 'shib_login' %}" method="get">
+
+	{% if next %}
+		<input type="hidden" name="next" value="{{ next }}" />
+	{% endif %}
+
+	<div class="form-group">
+	    <div class="col-sm-offset-2 col-sm-3">
+	      <button type="submit" class="btn btn-primary btn-block">{% trans "Login" %}</button>
+	    </div>
+	</div>
+	
+</form>
+{% endif %}
+
+
+{% if use_django_openid_auth %}
+
+<hr/>
+
+<h2>{% trans "Sign in with your OpenID" %}</h2>
+<form class="form-horizontal" role="form" name="fopenid" action="{% url 'django_openid_auth.views.login_begin' %}" method="post">{% csrf_token %}
+
+	<div class="form-group">
+		<label  class="col-sm-2 control-label" for="id_openid_identifier">{% trans "OpenID" %}</label>
+		<div class="col-sm-6">
+			<div class="input-group">
+				<span class="input-group-addon"><img src="{% url 'django_openid_auth.views.logo' %}"/></span>
+				<input id="id_openid_identifier" type="text" class="required openid" name="openid_identifier" maxlength="255" />
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-2">
+			<button class="btn btn-primary" name="bsignin" type="submit">{% trans "Sign in" %}</button>
+		</div>
+	</div>
+	
+	{% if next %}
+		<input type="hidden" name="next" value="{{ next }}" />
+	{% endif %}
+	
+	{% include 'openid/shortcut_buttons.html' %}
+
+</form>
+{% endif %}
+
+</div>
+{% endblock %}

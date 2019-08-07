@@ -1,0 +1,18 @@
+{% load i18n %}{% autoescape off %}
+{% trans "You registered the schedule for attending the meeting." %}
+
+{{ meetingform.title.label }}: {{ meetingform.title.value }}
+{{ meetingform.place.label }}: {{ meetingform.place.value }}
+
+{{ entryform.name.label }}: {{ entryform.name.value }}
+{{ entryform.mail.label }}: {{ entryform.mail.value }}
+{{ entryform.comment.label }}:
+{{ entryform.comment.value|safe }}
+
+{% trans "For updating your schedule" %}:
+{{ update_url }}
+
+{% trans "Have a good meeting !" %}
+
+{% blocktrans %}The {{ site_name }} team{% endblocktrans %}
+{% endautoescape %}

@@ -1,0 +1,15 @@
+{% load i18n %}
+{% load static %}
+{% load url from future %}
+
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<fieldset>
+				<legend>{% trans 'Shortcuts' %}</legend>
+				<button class="shortcut btn btn-default" type="button" data-url="https://www.google.com/accounts/o8/id"><img src="{% static 'images/openid/google.png' %}" alt="{% trans 'Sign in with Google OpenID' %}" border="0" /></button>
+				<button class="shortcut btn btn-link" type="button" data-url="https://me.yahoo.co.jp"><img src="{% static 'images/openid/yahoo.gif' %}" alt="{% trans 'Sign in with Yahoo! JAPAN OpenID' %}" border="0" /></button>
+				<button class="shortcut btn btn-link" type="button" data-url="http://livedoor.com"><img src="{% static 'images/openid/livedoor.gif' %}" alt="{% trans 'Sign in with livedoor OpenID' %}" border="0" /></button>
+				<button class="shortcut btn btn-link" type="button" data-url="https://mixi.jp"><img src="{% static 'images/openid/mixi.gif' %}" alt="{% trans 'Sign in with mixi OpenID' %}" border="0" /></button>
+			</fieldset>
+		</div>
+	</div>

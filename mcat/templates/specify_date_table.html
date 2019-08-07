@@ -1,0 +1,38 @@
+{% load i18n %}
+<div class="col-sm-12" style="overflow:auto;">
+	<table class="table table-bordered table-condensed table-responsive" id="specify_date_table" data-rows="{{ table_header_days|length }}" data-cols="{{ table_header_times|length }}">
+		<thead>
+			<tr>
+				<th data-row="0" data-col="0">{% trans 'Date/Time' %}</th>
+				{% for table_header_time in table_header_times %}
+					<th data-row="0" data-col="{{ forloop.counter }}" >{{ table_header_time }}</th>
+				{% endfor %}
+				<th data-row="0" data-col="0">{% trans 'Date/Time' %}</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for table_header_day in table_header_days %}
+				<tr>
+					<th data-row="{{ forloop.counter }}" data-col="0">
+						{{ table_header_day }}({{ table_header_day|date:"D" }})
+					</th>
+					{% for table_header_time in table_header_times %}
+						<td data-row="{{ forloop.parentloop.counter }}" data-col="{{ forloop.counter }}" ></td>
+					{% endfor %}
+					<th data-row="{{ forloop.counter }}" data-col="0">
+						{{ table_header_day }}({{ table_header_day|date:"D" }})
+					</th>
+				</tr>
+			{% endfor %}
+		</tbody>
+		<tfoot>
+			<tr>
+				<th data-row="0" data-col="0">{% trans 'Date/Time' %}</th>
+				{% for table_header_time in table_header_times %}
+					<th data-row="0" data-col="{{ forloop.counter }}" >{{ table_header_time }}</th>
+				{% endfor %}
+				<th data-row="0" data-col="0">{% trans 'Date/Time' %}</th>
+			</tr>
+		</tfoot>
+	</table>
+</div>

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "User registration successful" %}{% endblock %}
+{% block content %}
+{% if account %}
+	<div class="container">
+		<div class="page-header">
+		    <h1>{% trans "Activation successful" %}</h1>
+		</div>
+		<div class="clearfix col-sm-12">
+		    {% url 'mcatdjango.views.login' as login_url %}
+		    <p>{% blocktrans %}You can now proceed to <a href="{{ login_url }}">login.</a>{% endblocktrans %}</p>
+		</div>
+	</div>
+{% else %}
+	<div class="container">
+		<div class="page-header">
+		    <h1>{% trans "Activation failed" %}</h1>
+		</div>
+		<div class="clearfix col-sm-12">
+		    <p>{% trans "Something went wrong while activating your account. This might mean that the activation code was wrong or that your account has already been activated." %}</p>
+		</div>
+	</div>
+{% endif %}
+{% endblock %}

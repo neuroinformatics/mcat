@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% load url from future %}
+{% block title %}{% trans "Sign in with your OpenID" %}{% endblock %}
+{% block javascript %}
+<script>
+	$(function() {
+		$("input#id_openid_identifier").addClass("form-control");
+		$("button.shortcut").click(function(){
+			$("input#id_openid_identifier").val( $(this).attr("data-url") );
+			$("form").submit();
+			return false;
+		});
+	});
+</script>
+{% endblock %}
+{% block content %}
+<div class="container">
+<div class="page-header">
+<h1>{% trans "Sign in with your OpenID" %}</h1>
+</div>
+
+{% if form.errors %}
+<div class="alert alert-danger">
+	<p><strong>{% trans "Please correct errors below:" %}</strong></p>
+    {% if form.next.errors %}
+    	<span class="error">{{ form.next.errors|join:", " }}</span>
+    {% endif %}
+</div>
+{% endif %}
+
+<form class="form-horizontal" role="form" name="fopenid" action="{{ action }}" method="post">{% csrf_token %}
+
+	<div class="form-group {% if form.openid_identifier.errors %}has-error{% endif %}">
+		<label  class="col-sm-2 control-label" for="id_openid_identifier">{% trans "OpenID" %}</label>
+		<div class="col-sm-4">
+			<div class="input-group">
+				<span class="input-group-addon"><img src="{% url 'django_openid_auth.views.logo' %}"/></span>
+				{{ form.openid_identifier }}
+			</div>
+			{% for error in form.openid_identifier.errors %}
+				<p class="help-block">{{ form.openid_identifier.errors|join:", " }}</p>
+			{% endfor %}
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-2">
+			<button class="btn btn-primary" name="bsignin" type="submit">{% trans "Sign in" %}</button>
+		</div>
+	</div>
+
+	{% if next %}
+		<input type="hidden" name="next" value="{{ next }}" />
+	{% endif %}
+	
+	{% include 'openid/shortcut_buttons.html' %}
+
+</form>
+</div>
+{% endblock %} 

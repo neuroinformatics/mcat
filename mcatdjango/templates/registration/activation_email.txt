@@ -1,0 +1,14 @@
+{% load i18n %}{% load url from future %}{% autoescape off %}
+{% blocktrans with site.name as site_name %}
+You have created an account for {{ site_name }}, which has to
+be activated. To do this, please follow the following link:
+{% endblocktrans %}
+http://{{ site.domain }}{% url 'registration.views.activate' activation_key %}
+{% blocktrans %}
+Please do take note that if your activation does not succeed
+within {{ expiration_days }} days, you will have to restart
+the activation process.
+{% endblocktrans %}
+{% trans "Have a good meeting !" %}
+{% blocktrans with site.name as site_name %}The {{ site_name }} team{% endblocktrans %}
+{% endautoescape %}

@@ -1,0 +1,15 @@
+@charset "utf-8";
+/*
+ * style.css
+ *
+ * @author Takayuki Kannon <kannon@brain.riken.jp>
+*/
+body {
+	padding-top: 50px;
+	padding-bottom: 50px;
+}
+
+#specify_detail_table th {
+	text-align: center;
+	width: auto;
+}

@@ -1,0 +1,244 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load url from future %}
+{% block title %}{% trans "View" %}{% endblock %}
+{% block javascript %}
+<script>
+	var mode_color = {
+		'0' : '#faa',
+		'1' : '#fff',
+		'2' : '#afa',
+		'-' : '#aaa',
+	};
+
+	function init_table_color() {
+		$("table#schedule_table>thead>tr>th[data-aggregate='max']").css("background","#fff");
+		$("table#schedule_table>thead>tr>th[data-aggregate='mid']").css("background","#aaa");
+		$("table#schedule_table>thead>tr>th[data-aggregate='min']").css("background","#555");
+		$("table#schedule_table>tbody>*>td[data-attend='0']").css("background", mode_color['0']);
+		$("table#schedule_table>tbody>*>td[data-attend='1']").css("background", mode_color['1']);
+		$("table#schedule_table>tbody>*>td[data-attend='2']").css("background", mode_color['2']);		
+		$("table#schedule_table>tbody>*>td[data-attend='-']").css("background", mode_color['-']);
+	}
+	
+	function check_forced() {
+		$("table#attendees_table>tbody>tr>td>input").each(function () {
+			if($(this).prop("checked")) {
+				var id = $(this).attr("data-id");
+				$("table#schedule_table>tbody>tr[data-id='" + id + "']>td").each(function () {
+					if( $(this).attr("data-attend") == '0' ) {
+						var col = $(this).attr("data-col");
+						$("table#schedule_table>thead>tr>th[data-col='" + col + "']").each(function () {
+							$(this).css("background","#555");
+						});
+					}
+					if( $(this).attr("data-attend") == '2' ) {
+						var col = $(this).attr("data-col");
+						$("table#schedule_table>thead>tr#attend_tr>th[data-col='" + col + "']").each(function () {
+							$(this).css("background","#555");
+						});
+					}
+				});
+			}
+		});		
+	}
+	
+	var header_width;
+	var header_left;
+	
+	$(function() {
+		init_table_color();
+		check_forced();
+		$("table#attendees_table>tbody>tr>td>input").click(function () {
+			init_table_color();
+			check_forced();
+		});
+
+		header_width = $("table#schedule_table .fixed_header").css("width");
+		header_left  = $("table#schedule_table .fixed_header").position().left; 
+		$("table#schedule_table .float_header").css("position", "absolute");
+		$("table#schedule_table .float_header").css("width", header_width);
+		$("table#schedule_table .float_header").css("background-color", "#fff");
+		
+		$("div#schedule_table_div").scroll(function(){
+			scroll_left = $(this).scrollLeft();
+			if( Number(scroll_left) >= Number(header_left) ) {
+				$("table#schedule_table .float_header").css("left", scroll_left);
+			} else {
+				$("table#schedule_table .float_header").css("left", header_left);
+			}
+		});
+	});
+</script>
+{% endblock %}
+{% block content %}
+<div class="container">
+<div class="page-header">
+<h1>{% trans "View Meeting Schedules" %}</h1>
+</div>
+
+<div class="page-header">
+<h2>{% trans "Meeting information" %}</h2>
+</div>
+
+<form class="form-horizontal" role="form" action="#" method="post">{% csrf_token %}
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">{{ detailform.title.label }}</label>
+	<div class="col-sm-10">
+		<p class="form-control-static">{{ meeting.title }}</p>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-sm-2 control-label">{{ detailform.place.label }}</label>
+	<div class="col-sm-10">
+		<p class="form-control-static">{{ meeting.place }}</p>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-sm-2 control-label">{{ detailform.date_start.label }}</label>
+	<div class="col-sm-10">
+		<p class="form-control-static">{{ meeting.date_start }} {% trans "-" %} {{ meeting.date_end }}</p>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">{{ detailform.time_slot.label }}</label>
+	<div class="col-sm-10">
+		<p class="form-control-static">
+			{{ meeting.get_time_slot_display }}
+		</p>
+	</div>
+</div>
+{% if detailform.time_slot.value == 'hour_full' %}
+<div class="form-group">
+	<label class="col-sm-2 control-label">{{ detailform.time_start.label }}</label>
+	<div class="col-sm-10">
+		<p class="form-control-static">{{meeting.get_time_start_display}} {% trans "-" %} {{meeting.get_time_end_display}}</p>
+	</div>
+</div>
+{% endif %}
+<div class="form-group">
+	<label class="col-sm-2 control-label">{{ detailform.option_mode.label }}</label>
+	<div class="col-sm-10">
+		<p class="form-control-static">
+			{{ meeting.get_option_mode_display }}
+		</p>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">{{ detailform.remarks.label }}</label>
+	<div class="col-sm-10">
+		<p class="form-control-static"><pre>{{ meeting.remarks }}</pre></p>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">{% trans "Entry URL" %}</label>
+	<div class="col-sm-10">
+		<p class="form-control-static"><a href="{{ entry_url }}">{{ entry_url }}</a></p>
+	</div>
+</div>
+
+<div class="page-header">
+<h2>{% trans "Attendees table" %}</h2>
+</div>
+
+<div class="col-sm-12" style="overflow: auto;">
+	<table class="table table-hover table-responsive" id="attendees_table">
+		<thead>
+			<tr>
+				<th style="text-align:center;white-space:nowrap;">{% trans 'Forced' %}</th>
+				<th>{{ entryform.name.label }}</th>
+				<th>{{ entryform.mail.label }}</th>
+				<th>{{ entryform.comment.label }}</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for attend in attends %}
+				<tr>
+					<td style="text-align:center;"><input type="checkbox" data-id="{{ attend.mail }}" /></td>
+					<td style="white-space:nowrap;">{{ attend.name }}</td>
+					<td>{{ attend.mail }}</td>
+					<td>{{ attend.comment }}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+
+<div class="page-header">
+<h2>{% trans "Schedule table" %}</h2>
+</div>
+
+<style type="text/css">
+table#schedule_table>thead>tr>th,table#schedule_table>tbody>tr>td {
+	text-align:center;
+	white-space:nowrap;
+}
+</style>
+
+<div class="col-sm-12" id="schedule_table_div" style="overflow:auto;">
+	<table class="table table-bordered table-condensed table-responsive" id="schedule_table">
+		<thead>
+			<tr>
+				<th class="fixed_header">{% trans 'Date' %}</th>
+				{% for table_header_day in table_header_days %}			
+					<th colspan="{{ table_header_times|length }}">{{ table_header_day }}({{ table_header_day|date:"D" }})</th>
+				{% endfor %}
+				<th class="float_header">{% trans 'Date' %}</th>
+			</tr>
+			<tr>
+				<th class="fixed_header">{% trans 'Time' %}</th>
+				{% for table_header_day in table_header_days %}			
+					{% for table_header_time in table_header_times %}			
+						<th>{{ table_header_time }}</th>
+					{% endfor %}
+				{% endfor %}
+				<th class="float_header">{% trans 'Time' %}</th>
+			</tr>
+			<tr id="attend_tr">
+				<th class="fixed_header">{% trans 'Attendees' %}</th>
+					{% for aggregate in aggregate_attend %}
+						<th data-col="{{ forloop.counter }}" data-aggregate="{% if aggregate == 0 %}min{% else %}{% ifequal aggregate aggregate_attend_max %}max{% else %}mid{% endifequal%}{% endif %}">{{ aggregate }}</th>
+					{% endfor %}				
+				<th class="float_header">{% trans 'Attendees' %}</th>
+			</tr>
+			{% if meeting.option_mode != 'none' %}
+				<tr>
+					{% if meeting.option_mode == 'web' %}
+						<th class="fixed_header">{% trans '+ WEB' %}</th>
+					{% endif %}
+					{% if meeting.option_mode == 'maybe' %}
+						<th class="fixed_header">{% trans '+ Maybe' %}</th>
+					{% endif %}
+					{% for aggregate in aggregate_option %}			
+						<th data-col="{{ forloop.counter }}" data-aggregate="{% if aggregate == 0 %}min{% else %}{% ifequal aggregate aggregate_option_max %}max{% else %}mid{% endifequal%}{% endif %}">{{ aggregate }}</th>
+					{% endfor %}
+					{% if meeting.option_mode == 'web' %}
+						<th class="float_header">{% trans '+ WEB' %}</th>
+					{% endif %}
+					{% if meeting.option_mode == 'maybe' %}
+						<th class="float_header">{% trans '+ Maybe' %}</th>
+					{% endif %}
+				</tr>			
+			{% endif %}
+		</thead>
+		<tbody>
+			{% for attend in attends %}
+				<tr data-id="{{ attend.mail }}">
+					<td class="fixed_header">{{ attend.name }}</td>
+					{% for attend in attend.date_attend %}
+						<td data-col="{{ forloop.counter }}" data-attend="{{attend}}"></td>
+					{% endfor %}				
+					<td class="float_header">{{ attend.name }}</td>
+				</tr>
+			{% endfor %}
+		</tbody>		
+	</table>
+</div>
+
+</form>
+</div>
+{% endblock %}

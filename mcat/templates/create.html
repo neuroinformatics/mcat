@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load url from future %}
+{% block title %}{% trans "Create" %}{% endblock %}
+{% block javascript %}
+<script>
+	$(function() {
+		$(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
+		
+		if($("input[type='radio'][name='time_slot']:checked").val() == "hour_full") {
+			$("#timerange").show();
+		}else{
+			$("#timerange").hide();
+		}
+		$("input[type='radio'][name='time_slot']").click(function(){
+			if($(this).val() == "hour_full") {
+				$("#timerange").show();
+			}else{
+				$("#timerange").hide();
+			}
+		});
+	});
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+<div class="page-header">
+<h1>{% trans "Create a New Meeting" %}</h1>
+</div>
+
+<form class="form-horizontal" role="form" action="{% url 'mcat.views.create' %}" method="post">{% csrf_token %}
+
+<div class="form-group {% if createform.title.errors %}has-error{% endif %}">
+	<label class="col-sm-2 control-label">{{ createform.title.label }}</label>
+	<div class="col-sm-10">
+		{{ createform.title }}
+		{% for error in createform.title.errors %}
+			<p class="help-block">{{ error }}</p>
+		{% endfor %}
+	</div>
+</div>
+
+<div class="form-group {% if createform.place.errors %}has-error{% endif %}">
+	<label class="col-sm-2 control-label">{{ createform.place.label }}</label>
+	<div class="col-sm-10">
+		{{ createform.place }}
+		{% for error in createform.place.errors %}
+			<p class="help-block">{{ error }}</p>
+		{% endfor %}
+	</div>
+</div>
+
+<div class="form-group {% if createform.date_start.errors or createform.date_end.errors or date_range_error %}has-error{% endif %}">
+	<label class="col-sm-2 control-label">{% trans "Date Range" %}</label>
+	<div class="col-sm-10">
+		<div class="row">
+ 		  <div class="col-sm-5">
+		    <div class="input-group">
+		      <span class="input-group-addon">
+		        {% trans "From" %}
+		      </span>
+			  {{ createform.date_start }}
+		    </div>
+			{% for error in createform.date_start.errors %}
+				<p class="help-block">{{ error }}</p>
+			{% endfor %}
+		  </div>
+		  <div class="col-sm-5">
+		    <div class="input-group">
+		      <span class="input-group-addon">
+		        {% trans "To" %}
+		      </span>
+			  {{ createform.date_end }}
+		    </div>
+			{% for error in createform.date_end.errors %}
+				<p class="help-block">{{ error }}</p>
+			{% endfor %}
+		  </div>
+		</div>
+		<p class="help-block">{% trans "You can edit the details on next screen." %}</p>
+		{% if date_range_error %}
+			<p class="help-block">{% trans "Invalid date range." %}</p>
+		{% endif %}		    		
+	</div>
+</div>
+
+<div class="form-group {% if createform.time_slot.errors %}has-error{% endif %}">
+	<label class="col-sm-2 control-label">{{createform.time_slot.label}}</label>
+	<div class="col-sm-10">
+		{% for radio in createform.time_slot %}
+		    <label class="radio-inline">
+		        {{ radio.tag }}
+		        {{ radio.choice_label }}
+		    </label>
+		{% endfor %}
+		{% for error in createform.time_slot.errors %}
+			<p class="help-block">{{ error }}</p>
+		{% endfor %}
+	</div>
+</div>
+
+<div class="form-group {% if createform.time_start.errors or createform.time_end.errors or time_range_error %}has-error{% endif %}" id="timerange">
+	<label class="col-sm-2 control-label">{% trans "Time Range" %}</label>
+	<div class="col-sm-10">
+		<div class="row">
+		  <div class="col-sm-5">
+		    <div class="input-group">
+		      <span class="input-group-addon">
+		        {% trans "From" %}
+		      </span>
+	      	  {{ createform.time_start }}
+		    </div>
+			{% for error in createform.time_start.errors %}
+				<p class="help-block">{{ error }}</p>
+			{% endfor %}		    
+		  </div>
+		  <div class="col-sm-5">
+		    <div class="input-group">
+		      <span class="input-group-addon">
+		        {% trans "To" %}
+		      </span>
+	      	  {{ createform.time_end }}
+		    </div>
+			{% for error in createform.time_end.errors %}
+				<p class="help-block">{{ error }}</p>
+			{% endfor %}		    
+		  </div>
+		</div>
+		{% if time_range_error %}
+			<p class="help-block">{% trans "Invalid time range." %}</p>
+		{% endif %}		    		
+	</div>
+</div>
+
+<div class="form-group {% if createform.option_mode.errors %}has-error{% endif %}">
+	<label class="col-sm-2 control-label">{{ createform.option_mode.label }}</label>
+	<div class="col-sm-10">
+		{% for radio in createform.option_mode %}
+		    <label class="radio-inline">
+		        {{ radio.tag }}
+		        {{ radio.choice_label }}
+		    </label>
+		{% endfor %}
+		{% for error in createform.option_mode.errors %}
+			<p class="help-block">{{ error }}</p>
+		{% endfor %}	
+	</div>
+</div>
+
+<div class="form-group {% if createform.remarks.errors %}has-error{% endif %}">
+	<label class="col-sm-2 control-label">{{ createform.remarks.label }}</label>
+	<div class="col-sm-10">
+		{{ createform.remarks }}
+		<p class="help-block">{% trans "i.e. meeting description, participants, agenda, etc..." %}</p>
+		{% for error in createform.remarks.errors %}
+			<p class="help-block">{{ error }}</p>
+		{% endfor %}
+	</div>
+</div>
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-primary">{% trans "Next" %}</button>
+    </div>
+</div>
+
+</form>
+</div>
+{% endblock %}
